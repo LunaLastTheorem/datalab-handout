@@ -179,7 +179,7 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+  return ~(~x|~y);
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
@@ -189,7 +189,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  return 2;
+  return (~x|~y);
 }
 /*
  * isTmin - returns 1 if x is the minimum, two's complement number,
@@ -199,7 +199,7 @@ int bitNor(int x, int y) {
  *   Rating: 1
  */
 int isTmin(int x) {
-  return 2;
+  return !(x+x) & !!x;
 }
 /* 
  * upperBits - pads n upper bits with 1's
@@ -210,7 +210,7 @@ int isTmin(int x) {
  *  Rating: 1
  */
 int upperBits(int n) {
-  return 2;
+  return ((!!n & 1)<<31)>> (n+ ~0);
 }
 /* 
  * TMax - return maximum two's complement integer 
@@ -219,7 +219,7 @@ int upperBits(int n) {
  *   Rating: 1
  */
 int tmax(void) {
-  return 2;
+  return ~(1<<31);
 }
 //2
 /* 
@@ -231,7 +231,7 @@ int tmax(void) {
  *  Rating: 2
  */
 int sign(int x) {
-    return 2;
+    return !!(x) | (x<<31);
 }
 /* 
  * floatNegate - Return bit-level equivalent of expression -f for
