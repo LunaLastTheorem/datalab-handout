@@ -189,7 +189,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  return (~x|~y);
+  return (~x&~y);
 }
 /*
  * isTmin - returns 1 if x is the minimum, two's complement number,
@@ -199,7 +199,7 @@ int bitNor(int x, int y) {
  *   Rating: 1
  */
 int isTmin(int x) {
-  return !(x+x) & !!x;
+  return !(x + x) & !!x;
 }
 /* 
  * upperBits - pads n upper bits with 1's
@@ -210,7 +210,7 @@ int isTmin(int x) {
  *  Rating: 1
  */
 int upperBits(int n) {
-  return ((!!n & 1)<<31)>> (n+ ~0);
+  return ((!!n & 1)<<31) >> (n + ~0);
 }
 /* 
  * TMax - return maximum two's complement integer 
@@ -231,7 +231,7 @@ int tmax(void) {
  *  Rating: 2
  */
 int sign(int x) {
-    return !!(x) | (x<<31);
+    return (!!x) | (x>>31);
 }
 /* 
  * floatNegate - Return bit-level equivalent of expression -f for
@@ -321,7 +321,8 @@ int copyLSB(int x) {
  *   Rating: 3 
  */
 int rotateLeft(int x, int n) {
-  return 2;
+  unsigned uf = x;
+  return (((x<<n)>>n)<<n) | (uf >> (32-n));
 }
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
@@ -332,7 +333,8 @@ int rotateLeft(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return 2;
+  unsigned uf = x;
+  return (uf >> n);
 }
 /* 
  * isLess - if x < y  then return 1, else return 0 
@@ -356,7 +358,7 @@ int isLess(int x, int y) {
  *   Rating: 3
  */
 int multFiveEighths(int x) {
-  return 2;
+  return ((x<<2) + x) >> 3;
 }
 /* 
  * subtractionOK - Determine if can compute x-y without overflow
