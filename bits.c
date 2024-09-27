@@ -179,7 +179,7 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return ~(~x|~y);
+  return ~(~x | ~y);
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
@@ -189,7 +189,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  return (~x&~y);
+  return ~x & ~y;
 }
 /*
  * isTmin - returns 1 if x is the minimum, two's complement number,
@@ -245,7 +245,14 @@ int sign(int x) {
  *   Rating: 2
  */
 unsigned floatNegate(unsigned uf) {
- return 2;
+  unsigned exp = (uf >> 23) & 0xFF; //extracts the exponent
+  unsigned frac = uf & 0x7FFFFF; //extacts the fraction
+
+  if(exp == 0xFF && frac != 0){ // if ewxponent is all zeroes and the fraction is not all 0 then return NaN
+    return uf;
+  }
+
+  return uf ^ 0x80000000; // flips the last bit
 }
 /* 
  * allEvenBits - return 1 if all even-numbered bits in word set to 1
