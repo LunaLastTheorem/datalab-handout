@@ -263,7 +263,7 @@ unsigned floatNegate(unsigned uf) {
  *   Rating: 2
  */
 int allEvenBits(int x) {
-  return 2;
+  return !((x & 0x55555555) ^ 0x55555555);
 }
 /* 
  * anyOddBit - return 1 if any odd-numbered bit in word set to 1
@@ -274,7 +274,7 @@ int allEvenBits(int x) {
  *   Rating: 2
  */
 int anyOddBit(int x) {
-    return 2;
+    return !!(x & 0xAAAAAAAA);
 }
 /* 
  * isPositive - return 1 if x > 0, return 0 otherwise 
