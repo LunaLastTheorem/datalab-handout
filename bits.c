@@ -284,7 +284,7 @@ int anyOddBit(int x) {
  *   Rating: 2
  */
 int isPositive(int x) {
-  return 2;
+  return !(x>> 31) & !!x;
 }
 /* 
  * byteSwap - swaps the nth byte and the mth byte
