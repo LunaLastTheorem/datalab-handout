@@ -1,8 +1,8 @@
-/* 
- * CS:APP Data Lab 
- * 
+/*
+ * CS:APP Data Lab
+ *
  * <Please put your name and userid here>
- * 
+ *
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
  *
@@ -10,7 +10,7 @@
  * compiler. You can still use printf for debugging without including
  * <stdio.h>, although you might get a compiler warning. In general,
  * it's not good practice to ignore compiler warnings, but in this
- * case it's OK.  
+ * case it's OK.
  */
 
 #if 0
@@ -132,7 +132,6 @@ NOTES:
  *      the correct answers.
  */
 
-
 #endif
 /* Copyright (C) 1991-2018 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
@@ -170,38 +169,41 @@ NOTES:
    - 285 hentaigana
    - 3 additional Zanabazar Square characters */
 /* We do not support C11 <threads.h>.  */
-//1
-/* 
- * bitAnd - x&y using only ~ and | 
+// 1
+/*
+ * bitAnd - x&y using only ~ and |
  *   Example: bitAnd(6, 5) = 4
  *   Legal ops: ~ |
  *   Max ops: 8
  *   Rating: 1
  */
-int bitAnd(int x, int y) {
+int bitAnd(int x, int y)
+{
   return ~(~x | ~y);
 }
-/* 
- * bitNor - ~(x|y) using only ~ and & 
+/*
+ * bitNor - ~(x|y) using only ~ and &
  *   Example: bitNor(0x6, 0x5) = 0xFFFFFFF8
  *   Legal ops: ~ &
  *   Max ops: 8
  *   Rating: 1
  */
-int bitNor(int x, int y) {
+int bitNor(int x, int y)
+{
   return ~x & ~y;
 }
 /*
  * isTmin - returns 1 if x is the minimum, two's complement number,
- *     and 0 otherwise 
+ *     and 0 otherwise
  *   Legal ops: ! ~ & ^ | +
  *   Max ops: 10
  *   Rating: 1
  */
-int isTmin(int x) {
+int isTmin(int x)
+{
   return !(x + x) & !!x;
 }
-/* 
+/*
  * upperBits - pads n upper bits with 1's
  *  You may assume 0 <= n <= 32
  *  Example: upperBits(4) = 0xF0000000
@@ -209,20 +211,22 @@ int isTmin(int x) {
  *  Max ops: 10
  *  Rating: 1
  */
-int upperBits(int n) {
-  return ((!!n & 1)<<31) >> (n + ~0);
+int upperBits(int n)
+{
+  return ((!!n & 1) << 31) >> (n + ~0);
 }
-/* 
- * TMax - return maximum two's complement integer 
+/*
+ * TMax - return maximum two's complement integer
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 4
  *   Rating: 1
  */
-int tmax(void) {
-  return ~(1<<31);
+int tmax(void)
+{
+  return ~(1 << 31);
 }
-//2
-/* 
+// 2
+/*
  * sign - return 1 if positive, 0 if zero, and -1 if negative
  *  Examples: sign(130) = 1
  *            sign(-23) = -1
@@ -230,10 +234,11 @@ int tmax(void) {
  *  Max ops: 10
  *  Rating: 2
  */
-int sign(int x) {
-    return (!!x) | (x>>31);
+int sign(int x)
+{
+  return (!!x) | (x >> 31);
 }
-/* 
+/*
  * floatNegate - Return bit-level equivalent of expression -f for
  *   floating point argument f.
  *   Both the argument and result are passed as unsigned int's, but
@@ -244,17 +249,19 @@ int sign(int x) {
  *   Max ops: 10
  *   Rating: 2
  */
-unsigned floatNegate(unsigned uf) {
-  unsigned exp = (uf >> 23) & 0xFF; //extracts the exponent
-  unsigned frac = uf & 0x7FFFFF; //extacts the fraction
+unsigned floatNegate(unsigned uf)
+{
+  unsigned exp = (uf >> 23) & 0xFF; // extracts the exponent
+  unsigned frac = uf & 0x7FFFFF;    // extacts the fraction
 
-  if(exp == 0xFF && frac != 0){ // if ewxponent is all zeroes and the fraction is not all 0 then return NaN
+  if (exp == 0xFF && frac != 0)
+  { // if ewxponent is all zeroes and the fraction is not all 0 then return NaN
     return uf;
   }
 
   return uf ^ 0x80000000; // flips the last bit
 }
-/* 
+/*
  * allEvenBits - return 1 if all even-numbered bits in word set to 1
  *   where bits are numbered from 0 (least significant) to 31 (most significant)
  *   Examples allEvenBits(0xFFFFFFFE) = 0, allEvenBits(0x55555555) = 1
@@ -262,10 +269,11 @@ unsigned floatNegate(unsigned uf) {
  *   Max ops: 12
  *   Rating: 2
  */
-int allEvenBits(int x) {
+int allEvenBits(int x)
+{
   return !((x & 0x55555555) ^ 0x55555555);
 }
-/* 
+/*
  * anyOddBit - return 1 if any odd-numbered bit in word set to 1
  *   where bits are numbered from 0 (least significant) to 31 (most significant)
  *   Examples anyOddBit(0x5) = 0, anyOddBit(0x7) = 1
@@ -273,20 +281,22 @@ int allEvenBits(int x) {
  *   Max ops: 12
  *   Rating: 2
  */
-int anyOddBit(int x) {
-    return !!(x & 0xAAAAAAAA);
+int anyOddBit(int x)
+{
+  return !!(x & 0xAAAAAAAA);
 }
-/* 
- * isPositive - return 1 if x > 0, return 0 otherwise 
+/*
+ * isPositive - return 1 if x > 0, return 0 otherwise
  *   Example: isPositive(-1) = 0.
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 8
  *   Rating: 2
  */
-int isPositive(int x) {
-  return !(x>> 31) & !!x;
+int isPositive(int x)
+{
+  return !(x >> 31) & !!x;
 }
-/* 
+/*
  * byteSwap - swaps the nth byte and the mth byte
  *  Examples: byteSwap(0x12345678, 1, 3) = 0x56341278
  *            byteSwap(0xDEADBEEF, 0, 2) = 0xDEEFBEAD
@@ -295,63 +305,69 @@ int isPositive(int x) {
  *  Max ops: 25
  *  Rating: 2
  */
-int byteSwap(int x, int n, int m) {
-    return 2;
+int byteSwap(int x, int n, int m)
+{
+  return 2;
 }
-/* 
- * isNotEqual - return 0 if x == y, and 1 otherwise 
+/*
+ * isNotEqual - return 0 if x == y, and 1 otherwise
  *   Examples: isNotEqual(5,5) = 0, isNotEqual(4,5) = 1
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 6
  *   Rating: 2
  */
-int isNotEqual(int x, int y) {
-  return 2;
+int isNotEqual(int x, int y)
+{
+  return !!(x ^ y);
 }
-/* 
+/*
  * copyLSB - set all bits of result to least significant bit of x
  *   Example: copyLSB(5) = 0xFFFFFFFF, copyLSB(6) = 0x00000000
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 5
  *   Rating: 2
  */
-int copyLSB(int x) {
-  return 2;
+int copyLSB(int x)
+{
+  return ((x & 0x1) << 31) >> 31;
 }
-//3
-/* 
+// 3
+/*
  * rotateLeft - Rotate x to the left by n
  *   Can assume that 0 <= n <= 31
  *   Examples: rotateLeft(0x87654321,4) = 0x76543218
  *   Legal ops: ~ & ^ | + << >> !
  *   Max ops: 25
- *   Rating: 3 
+ *   Rating: 3
  */
-int rotateLeft(int x, int n) {
+int rotateLeft(int x, int n)
+{
   unsigned uf = x;
-  return (((x<<n)>>n)<<n) | (uf >> (32-n));
+  return (((x << n) >> n) << n) | (uf >> (32 - n));
 }
-/* 
+/*
  * logicalShift - shift x to the right by n, using a logical shift
  *   Can assume that 0 <= n <= 31
  *   Examples: logicalShift(0x87654321,4) = 0x08765432
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 20
- *   Rating: 3 
+ *   Rating: 3
  */
-int logicalShift(int x, int n) {
+int logicalShift(int x, int n)
+{
   unsigned uf = x;
   return (uf >> n);
 }
-/* 
- * isLess - if x < y  then return 1, else return 0 
+/*
+ * isLess - if x < y  then return 1, else return 0
  *   Example: isLess(4,5) = 1.
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 24
  *   Rating: 3
  */
-int isLess(int x, int y) {
-  return 2;
+int isLess(int x, int y)
+{
+  return !!((x - y) >> 31);
 }
 /*
  * multFiveEighths - multiplies by 5/8 rounding toward 0.
@@ -364,17 +380,19 @@ int isLess(int x, int y) {
  *   Max ops: 12
  *   Rating: 3
  */
-int multFiveEighths(int x) {
-  return ((x<<2) + x) >> 3;
+int multFiveEighths(int x)
+{
+  return ((x << 2) + x) >> 3;
 }
-/* 
+/*
  * subtractionOK - Determine if can compute x-y without overflow
  *   Example: subtractionOK(0x80000000,0x80000000) = 1,
- *            subtractionOK(0x80000000,0x70000000) = 0, 
+ *            subtractionOK(0x80000000,0x70000000) = 0,
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 20
  *   Rating: 3
  */
-int subtractionOK(int x, int y) {
-  return 2;
+int subtractionOK(int x, int y)
+{
+  return !((x - y) >> 31);
 }
