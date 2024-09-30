@@ -271,7 +271,9 @@ unsigned floatNegate(unsigned uf)
  */
 int allEvenBits(int x)
 {
-  return !((x & 0x55555555) ^ 0x55555555);
+  int val = 0x55 | (0x55 << 8);
+  val |= val << 16; //creates the mask in less operations
+  return !((x & val) ^ val);
 }
 /*
  * anyOddBit - return 1 if any odd-numbered bit in word set to 1
@@ -283,7 +285,9 @@ int allEvenBits(int x)
  */
 int anyOddBit(int x)
 {
-  return !!(x & 0xAAAAAAAA);
+  int val = 0xaa | (0xaa << 8);
+  val |= val << 16; //creates the mask in less operations
+  return !!(x & val);
 }
 /*
  * isPositive - return 1 if x > 0, return 0 otherwise
@@ -342,8 +346,7 @@ int copyLSB(int x)
  */
 int rotateLeft(int x, int n)
 {
-  unsigned uf = x;
-  return (((x << n) >> n) << n) | (uf >> (32 - n));
+  return x << n | x >> (32 + (~n + 1)) & ((1 << n) + ~0);
 }
 /*
  * logicalShift - shift x to the right by n, using a logical shift
@@ -355,8 +358,7 @@ int rotateLeft(int x, int n)
  */
 int logicalShift(int x, int n)
 {
-  unsigned uf = x;
-  return (uf >> n);
+  return (x >> n) & ~((1 << 31) >> n << 1);
 }
 /*
  * isLess - if x < y  then return 1, else return 0
@@ -367,7 +369,7 @@ int logicalShift(int x, int n)
  */
 int isLess(int x, int y)
 {
-  return !!((x - y) >> 31);
+  return !!((x + (~y +1)) >> 31);
 }
 /*
  * multFiveEighths - multiplies by 5/8 rounding toward 0.
@@ -382,7 +384,7 @@ int isLess(int x, int y)
  */
 int multFiveEighths(int x)
 {
-  return ((x << 2) + x) >> 3;
+  return 2;
 }
 /*
  * subtractionOK - Determine if can compute x-y without overflow
@@ -394,5 +396,5 @@ int multFiveEighths(int x)
  */
 int subtractionOK(int x, int y)
 {
-  return !((x - y) >> 31);
+  return 2;
 }
