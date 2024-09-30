@@ -346,7 +346,7 @@ int copyLSB(int x)
  */
 int rotateLeft(int x, int n)
 {
-  return x << n | x >> (32 + (~n + 1)) & ((1 << n) + ~0);
+  return (x << n) | (x >> (32 + (~n + 1)) & ((1 << n) + ~0));
 }
 /*
  * logicalShift - shift x to the right by n, using a logical shift
@@ -396,5 +396,10 @@ int multFiveEighths(int x)
  */
 int subtractionOK(int x, int y)
 {
-  return 2;
+  int ySign = !!(y >> 31); // 1 if neg 0 if pos
+  int xSign = !!(x >> 31); // 1 if neg 0 if pos
+  int resSign = !!((x + (~y + 1)) >> 31); // 1 if neg 0 if pos
+
+  return !( (xSign ^ ySign) & (xSign ^ resSign) ); 
+  // returns 1 only when x and y are different signs and when the result is a different sign than x
 }
